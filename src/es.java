@@ -94,10 +94,10 @@ public final class es extends hj
             	String logo;
             	if (main.a.m > 400) {
             		logo = "/lBig.png";
-            		System.out.println("Logo big!!");
+            		System.out.println("Logo Big!!");
             	} else {
             		logo = "/l.png";
-            		System.out.println("Logo small!");
+            		System.out.println("Logo Small!");
             	}
                 hj.am = Image.createImage(String.valueOf(kf.a()) + logo);
             }
