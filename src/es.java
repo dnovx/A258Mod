@@ -115,7 +115,7 @@ public final class es extends hj
         ((js)i).aw = n;
         do2 a = do2.a();
         do2 a2 = do2.a();
-        int n2 = 500;
+        int n2 = 200;
         a2.c = n2;
         a.a = n2;
         this.b.a(true);
