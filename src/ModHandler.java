@@ -262,7 +262,7 @@ public class ModHandler implements ii {
     		    localhn.ax = localhn.D = localNPC.Y;
     		    localhn.ac = localNPC.Star;
     		    localhn.X = localNPC.Icon;
-    		    ir.m.addElement(localhn);
+    		    ir.b(localhn);
     		}
     	}
     }
