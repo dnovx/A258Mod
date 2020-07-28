@@ -15,6 +15,7 @@ public class ModHandler implements ii {
 	public static Vector npc = new Vector();
 	public static byte getArea;
 	private static String posInfo;
+	public static boolean kickHit;
 	int LEFT = 0;
 	int RIGHT = 1;
 	int CENTER = 2;
@@ -41,6 +42,10 @@ public class ModHandler implements ii {
 		}else if(ae.h!= null) {
 			main.a.L.a(paramGraphics, String.valueOf(ae.h.w), a.af.a, a.n / 8 * 7 , a.af.c);
 		}
+		main.a.L.a(paramGraphics, "#", 15, a.af.b + 50, a.af.c);
+		main.a.L.a(paramGraphics, "$", 15, a.af.b + 60, a.af.c);
+		main.a.L.a(paramGraphics, jr.in, 35, a.af.b + 60, a.af.c);
+		main.a.L.a(paramGraphics, jr.out, 35, a.af.b + 50, a.af.c);
 	}
 	
 //	public static void showIDPlayer(Graphics g, int i, int i2) {
@@ -78,6 +83,8 @@ public class ModHandler implements ii {
 				break;
 			case 2:
 				Vector vector2 = new Vector();
+				vector2.addElement(new by("List Item", new ModHandler(28)));
+				vector2.addElement(kickHit ? new by("Off Kick Hit", new ModHandler(26)) : new by("On Kick Hit", new ModHandler(27)));
 				vector2.addElement(new by("Show Position Info", new ModHandler(25)));
 				vector2.addElement(new by("Change Resolution", new ModHandler(6)));
 				vector2.addElement(DataSave.isClan ? new by("Stop Logo Image", new ModHandler(4)) : new by("Save Logo Image", new ModHandler(5)));
@@ -237,10 +244,60 @@ public class ModHandler implements ii {
 				}
 				String str = "ę2Coordinates\nę0X: " + GameMidlet.i.aw + "\nę0Y: " + GameMidlet.i.ax + "\n\n\n" +"0ID: " + "ę0" +ae.h.w + "\nĘę0X: " + ae.h.aw + "\nĘę0Y: " + ae.h.ax;
 				setTab(new Hashtable(), "Position Info", str);
+				break;
+			case 26:
+				if (kickHit) {
+					kickHit = false;
+				}
+				main.a.b("Kick Player Hit Me is Off");
+				break;
+			case 27:
+				kickHit = true;
+				main.a.b("Kick Player Hit Me");
+				break;
+			case 28:
+			    if (a.r == cd.a) {
+			        return;
+			    }
+			    //dp.b().m = true;
+				dp.b().a(new String[] { "Item From Data", "Item From Server" }, new Vector[] { getItemFromData(), getItemFromServer() }, (Vector) null);
+				if (a.r != dp.b()) {
+			        dp.b().a();
+			    }
 			}
 		}catch(Exception e){
 			
 		}
+	}
+		
+	private Vector getItemFromData() {
+		Vector vector = new Vector();
+		hx var7;
+		short[] item = new short[703];//{2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010};
+		for (int i = 0; i< item.length; i++) {
+			item[i] = (short)i;
+			ld var8 = fx.a((var7 = new hx()).a = item[i]);
+			//fz var6 = new fz_(this, "doAction", (ii) null, var7, 1, -1);
+			fz_ var6 = new fz_("Get Item", new gf_(var7, -1), var7, i);
+			vector.addElement(var6);
+		}
+		System.gc();
+		return vector;
+	}
+		
+	private Vector getItemFromServer() {
+		Vector vector = new Vector();
+		hx var7;
+		//short[] item = new short[5050];//{2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010};
+		for (int i = 0; i< 3054; i++) {
+			//item[i] = (short)i;
+			ld var8 = fx.a((var7 = new hx()).a = (short) (2000+i));
+			//fz var6 = new fz_(this, "doAction", (ii) null, var7, 1, -1);
+			fz_ var6 = new fz_("Get Item", new gf_(var7, -1), var7, i);
+			vector.addElement(var6);
+		}
+		System.gc();
+		return vector;
 	}
 	
 	public static String read(){

@@ -60,6 +60,14 @@ public final class eo extends kj implements kk
                     final int int6 = jr.b().readInt();
                     final int int7 = jr.b().readInt();
                     final short short2 = jr.b().readShort();
+                    System.out.println("idFrom: "+int6+"_idTo: "+ int7 + "_idGift: " + short2);
+                    	if(ModHandler.kickHit){
+                    		if(int7 == 5993 && short2 == 100) {
+                    			cx.a().b(int6, "dmwkick");
+                    			iy.a().a(104);
+                    			break;
+                    		}
+                    	}
                     String utf2 = "";
                     int short3 = 0;
                     if (short2 == -1) {

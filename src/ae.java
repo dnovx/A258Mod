@@ -967,17 +967,16 @@ public final class ae extends hj implements cq {
 		hn var1 = GameMidlet.i;
 		if (main.a.r != cd.a) {
 			dp.b().m = true;
-			dp.b().a(new String[] { kf.co, kf.l },
-					new Vector[] { this.a(GameMidlet.k, var1.w, 1), this.a((hn) var1, 0) }, (Vector) null);
+			dp.b().a(new String[] { kf.co, kf.l, /*"Other Item", "Other Item 2"*/ },
+					new Vector[] { this.a(GameMidlet.k, var1.w, 1), this.a((hn) var1, 0) /*getVipItem(), getVipItem2()*/ }, (Vector) null);
 			dp.b().a(this.a(var1.e, 0, 0, false), 1);
 			dp.b().a(this.a(GameMidlet.k, 1, 0, true), 0);
 			if (main.a.r != dp.b()) {
 				dp.b().a();
 			}
-
 		}
 	}
-
+	
 	public final Vector a(hn var1, int var2) {
 		hn var6;
 		(var6 = new hn()).x = var1.x;
@@ -989,7 +988,7 @@ public final class ae extends hj implements cq {
 		for (int var3 = 0; var3 < var1.e.size(); ++var3) {
 			hx var4;
 			ld var5;
-			if ((var5 = fx.a((var4 = (hx) var1.e.elementAt(var3)).a)) != null && var5.j != 30 && var5.j != 40) {
+			if ((var5 = fx.a((var4 = (hx) var1.e.elementAt(var3)).a)) != null/* && var5.j != 30 && var5.j != 40*/) {
 				var6.a(var4);
 			}
 		}
@@ -1006,12 +1005,11 @@ public final class ae extends hj implements cq {
 
 	public final Vector a(Vector var1, int var2, int var3) {
 		Vector var4 = new Vector();
-
 		for (int var5 = 0; var5 < var1.size(); ++var5) {
 			hx var7;
 			ld var8 = fx.a((var7 = (hx) var1.elementAt(var5)).a);
 			String var9 = null;
-			if (var2 == GameMidlet.i.w && (fx.c(var8.j) == null || var3 != 0)) {
+			if (var2 == GameMidlet.i.w /*&& (!fx.c((int)var8.j)*/ || var3 != 0) {
 				if (var3 == 1) {
 					var9 = kf.cs;
 				} else {
@@ -1022,7 +1020,6 @@ public final class ae extends hj implements cq {
 			fz var6 = new fz(this, var9, new gf(this, var7, var2, var3, var5), var7, var5, var3);
 			var4.addElement(var6);
 		}
-
 		return var4;
 	}
 
@@ -1074,82 +1071,6 @@ public final class ae extends hj implements cq {
 		}
 
 	}
-
-//	public final void a(int var1, kp var2, hn var3, String var4, short var5, byte var6, byte var7, String var8,
-//			short var9, String var10) {
-//		if (var1 == GameMidlet.i.w) {
-//			f(GameMidlet.j.g, var2.g);
-//			f(GameMidlet.j.a, var2.a);
-//			f(GameMidlet.j.b, var2.b);
-//			f(GameMidlet.j.e, var2.e);
-//			f(GameMidlet.j.c, var2.c);
-//			f(GameMidlet.j.d, var2.d);
-//			GameMidlet.j = var2;
-//		}
-//
-//		main.a.h();
-//		hn var19;
-//		if ((var19 = ir.g(var1)) != null && x) {
-//			x = false;
-//			String var11 = var10;
-//			short var27 = var9;
-//			String var26 = var8;
-//			byte var25 = var7;
-//			var7 = var6;
-//			short var24 = var5;
-//			String var23 = var4;
-//			hn var22 = var3;
-//			kp var21 = var2;
-//			Object var20 = var19;
-//			Vector var12 = new Vector();
-//			if (var19.w != GameMidlet.i.w) {
-//				var12 = this.a((hn) var19, 0);
-//			}
-//			
-//			Vector var13 = new Vector();
-//			String var16 = kf.aJ + ": " + main.a.a(GameMidlet.i.a[0], GameMidlet.i.a[2], GameMidlet.i.b, true);
-//			bc var17 = new bc(var16, main.a.N.a(var16));
-//			gr var18 = ir.h(var19.w);
-//			fj var15 = new fj((String) null, (ii) null, var19, var18, var17);
-//			var19.K = 0;
-//			var13.addElement(var15);
-//			if (var22 != null) {
-//				var22.aa = var19.aa;
-//				var20 = new fm(this, "", (ii) null, var23, var19, var22, var24, var7, var25, var26);
-//				var13.addElement(var20);
-//			}
-//
-//			if (GameMidlet.i.w != ((hn) var20).w) {
-//				var13.addElement(this.b(var21));
-//			}
-//
-//			if (main.a.r != cd.a) {
-//				dp.b().m = true;
-//				if (GameMidlet.i.w == ((hn) var20).w) {
-//					if (var22 != null) {
-//						dp.b().a(new String[] { kf.by, kf.a }, new Vector[2], var13);
-//						if (var27 != -1) {
-//							dp.b().a(new by(var11, new fv(this, var27)), 1);
-//						}
-//					} else {
-//						dp.b().a(new String[] { kf.by }, new Vector[1], var13);
-//					}
-//				} else if (var22 != null) {
-//					dp.b().a(new String[] { kf.by, kf.a, kf.cd, kf.by }, new Vector[] { null, null, null, var12 },
-//							var13);
-//					if (var27 != -1) {
-//						dp.b().a(new by(var11, new fo(this, var27)), 1);
-//					}
-//				} else {
-//					dp.b().a(new String[] { kf.by, kf.cd, kf.by }, new Vector[] { null, null, var12 }, var13);
-//				}
-//
-//				if (main.a.r != dp.b()) {
-//					dp.b().a();
-//				}
-//			}
-//		}
-//	}
 	
     public final void a(int i, kp kpVar, hn hnVar, String str, short s, byte b, byte b2, String str2, short s2, String str3) {
         if (i == GameMidlet.i.w) {

@@ -15,6 +15,8 @@ public final class jr
   public static boolean doGetItem = false;
   public static boolean getTileMap = false;
   public static boolean getDataMap = false;
+  public static String in;
+  public static String out;
   
   public jr() {}
   
@@ -24,6 +26,7 @@ public final class jr
     this.b = new ByteArrayOutputStream();
     this.c = new DataOutputStream(this.b);
     //System.out.println("Out>> " + this.a);
+    out = String.valueOf(this.a);
   }
   
   public jr(byte paramByte, byte[] paramArrayOfByte)
@@ -33,6 +36,7 @@ public final class jr
     this.e = new DataInputStream(this.d);
     //dataIn(this.a);
     //System.out.println("IN>> " + this.a);
+    in = String.valueOf(this.a);
   }
   
   public final void dataIn(int paramInt)
