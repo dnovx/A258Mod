@@ -13,6 +13,7 @@ final class dy implements Runnable {
    dy(kt var1, String var2) {
       this.a = var1;
       this.b = var2;
+      es.isIndoServer = var2;
    }
 
    public final void run() {

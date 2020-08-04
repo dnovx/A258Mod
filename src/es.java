@@ -47,6 +47,7 @@ public final class es extends hj
     private String I;
     private String J;
     private boolean K;
+    public static String isIndoServer = "999";
     
     static {
         es.s = 0;
@@ -734,6 +735,10 @@ public final class es extends hj
         es.w = false;
         this.I = "";
         this.J = "";
+        if (isIndoServer.equals("socket://124.81.71.183:19128")) {
+        	cx.a().a(this.b.f().toLowerCase(), this.c.f(), "2.5.0");
+        	return;
+        }
         cx.a().a(this.b.f().toLowerCase(), this.c.f(), "2.5.8");
     }
     

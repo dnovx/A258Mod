@@ -11,6 +11,8 @@ public final class jr
   private DataOutputStream c = null;
   private ByteArrayInputStream d = null;
   private DataInputStream e = null;
+  public static boolean showOut = false;
+  public static boolean showIn = false;
   public static boolean doGetClan = false;
   public static boolean doGetItem = false;
   public static boolean getTileMap = false;
@@ -25,8 +27,10 @@ public final class jr
     this.a = paramByte;
     this.b = new ByteArrayOutputStream();
     this.c = new DataOutputStream(this.b);
-    //System.out.println("Out>> " + this.a);
-    out = String.valueOf(this.a);
+    if (showOut) {
+    	System.out.println("Out>> " + this.a);
+    }
+    //out = String.valueOf(this.a);
   }
   
   public jr(byte paramByte, byte[] paramArrayOfByte)
@@ -35,8 +39,10 @@ public final class jr
     this.d = new ByteArrayInputStream(paramArrayOfByte);
     this.e = new DataInputStream(this.d);
     //dataIn(this.a);
-    //System.out.println("IN>> " + this.a);
-    in = String.valueOf(this.a);
+    if (showIn) {
+    	System.out.println("IN>> " + this.a);	
+    }
+    //in = String.valueOf(this.a);
   }
   
   public final void dataIn(int paramInt)

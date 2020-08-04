@@ -114,6 +114,7 @@ public final class cx extends kj
             super.b.c().writeUTF(s);
             super.b.c().writeUTF(s2);
             super.b.c().writeUTF(s3);
+            System.out.println("Login ver: " + s3);
             super.b.c().writeUTF(Base64.encode(s + "_" + s3));
         }
         catch (IOException ex) {}

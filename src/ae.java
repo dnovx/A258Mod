@@ -964,6 +964,7 @@ public final class ae extends hj implements cq {
 	}
 
 	protected final void q() {
+		if (GameMidlet.i != null) {
 		hn var1 = GameMidlet.i;
 		if (main.a.r != cd.a) {
 			dp.b().m = true;
@@ -974,6 +975,7 @@ public final class ae extends hj implements cq {
 			if (main.a.r != dp.b()) {
 				dp.b().a();
 			}
+		}
 		}
 	}
 	
@@ -1447,7 +1449,7 @@ public final class ae extends hj implements cq {
 			this.y = true;
 			main.a.i();
 			if (ea.b().e == 2) {
-				cx.a().c(-1);
+				cx.a().c((byte)-1);
 			} else {
 				byte[] var1 = new byte[] { 0, 13, 20, 9, 23, 11, 17 };
 				bf.a().a(var1[ea.b().e], -1);

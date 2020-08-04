@@ -1,14 +1,23 @@
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.microedition.io.ConnectionNotFoundException;
+import javax.microedition.io.Connector;
+import javax.microedition.io.ContentConnection;
+import javax.microedition.io.HttpConnection;
+import javax.microedition.io.InputConnection;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.rms.RecordStore;
 
 import main.GameMidlet;
 import main.a;
 
-public class ModHandler implements ii {
+public class ModHandler implements ii, Runnable {
 	
 	int Command;
 	public static byte Res = 0;
@@ -16,13 +25,22 @@ public class ModHandler implements ii {
 	public static byte getArea;
 	private static String posInfo;
 	public static boolean kickHit;
+	private static String cookie = null;
 	int LEFT = 0;
 	int RIGHT = 1;
 	int CENTER = 2;
+	private byte Thread;
+	private String key = "null";
+	private static RecordStore rs = null;
 	
 	public ModHandler(int i) {
 		this.Command = i;
 	}
+	
+	public ModHandler(byte b) {
+		this.Thread = b;
+	}
+	
 
 	public static void doOpen(Graphics paramGraphics) {
 		// TODO Auto-generated method stub
@@ -42,10 +60,10 @@ public class ModHandler implements ii {
 		}else if(ae.h!= null) {
 			main.a.L.a(paramGraphics, String.valueOf(ae.h.w), a.af.a, a.n / 8 * 7 , a.af.c);
 		}
-		main.a.L.a(paramGraphics, "#", 15, a.af.b + 50, a.af.c);
-		main.a.L.a(paramGraphics, "$", 15, a.af.b + 60, a.af.c);
-		main.a.L.a(paramGraphics, jr.in, 35, a.af.b + 60, a.af.c);
-		main.a.L.a(paramGraphics, jr.out, 35, a.af.b + 50, a.af.c);
+//		main.a.L.a(paramGraphics, "#", 15, a.af.b + 50, a.af.c);
+//		main.a.L.a(paramGraphics, "$", 15, a.af.b + 60, a.af.c);
+//		main.a.L.a(paramGraphics, jr.in, 35, a.af.b + 60, a.af.c);
+//		main.a.L.a(paramGraphics, jr.out, 35, a.af.b + 50, a.af.c);
 	}
 	
 //	public static void showIDPlayer(Graphics g, int i, int i2) {
@@ -83,8 +101,11 @@ public class ModHandler implements ii {
 				break;
 			case 2:
 				Vector vector2 = new Vector();
-				vector2.addElement(new by("List Item", new ModHandler(28)));
-				vector2.addElement(kickHit ? new by("Off Kick Hit", new ModHandler(26)) : new by("On Kick Hit", new ModHandler(27)));
+				vector2.addElement(new by("Do Use Item", new ModHandler(33)));
+				vector2.addElement(jr.showOut ? new by("Print Byte Out (ON)", new ModHandler(31)) : new by("Print Byte Out (OFF)", new ModHandler(32)));
+				vector2.addElement(jr.showIn ? new by("Print Byte In (ON)", new ModHandler(29)) : new by("Print Byte In (OFF)", new ModHandler(30)));
+				vector2.addElement(new by("List Item", new ModHandler(34)));
+				vector2.addElement(kickHit ? new by("Kick Hit (ON)", new ModHandler(26)) : new by("Kick Hit (OFF)", new ModHandler(27)));
 				vector2.addElement(new by("Show Position Info", new ModHandler(25)));
 				vector2.addElement(new by("Change Resolution", new ModHandler(6)));
 				vector2.addElement(DataSave.isClan ? new by("Stop Logo Image", new ModHandler(4)) : new by("Save Logo Image", new ModHandler(5)));
@@ -92,7 +113,7 @@ public class ModHandler implements ii {
 				vector2.addElement(DataSave.isDataItem ? new by("Stop Data Item", new ModHandler(22)) : new by("Save Data Item", new ModHandler(20)));
 				vector2.addElement(new by("Request Map Image", new ModHandler(14)));
 				vector2.addElement(new by("Request Map Data", new ModHandler(16)));
-				vector2.addElement(ce.reqEffImg ? new by("Request EffectObjImg: true", new ModHandler(19)) : new by("Request EffectObjImg: false", new ModHandler(18)));
+				vector2.addElement(ce.reqEffImg ? new by("Request EffectObjImg (ON)", new ModHandler(19)) : new by("Request EffectObjImg (OFF)", new ModHandler(18)));
 				le.a().a(vector2, this.LEFT);
 				break;
 			case 3:
@@ -264,12 +285,202 @@ public class ModHandler implements ii {
 				if (a.r != dp.b()) {
 			        dp.b().a();
 			    }
+				break;
+			case 29:
+				jr.showIn = false;
+				main.a.b("Print Byte in (OFF)");
+				break;
+			case 30:
+				jr.showIn = true;
+				main.a.b("Print Byte in (ON)");
+				break;
+			case 31:
+				jr.showOut = false;
+				main.a.b("Print Byte out (OFF)");
+				break;
+			case 32:
+				jr.showOut = true;
+				main.a.b("Print Byte out (ON)");
+				break;
+			case 33:
+				try {
+				 dx[] arrayOfdx = new dx[2];
+				 for (int i = 0; i < arrayOfdx.length; i++) {
+					 arrayOfdx[i] = new dx();
+					 arrayOfdx[i].d(1);
+				 }
+				 arrayOfdx[0].a(true);
+		         String[][] listTf = {{"Enter the", "Item ID"}, {"Enter the", "Type Chest"}};
+		         by command = new by(kf.cy, new ch_(arrayOfdx));
+		         hi.b().a(arrayOfdx, "Do Using Item", listTf, command);
+		         hi.b().a();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				break;
+			case 34:
+				main.a.d("Please wait");
+				load((byte)0);
+				break;
+			case 35:
+				load((byte)1);
 			}
 		}catch(Exception e){
 			
 		}
 	}
+	
+	private void checkCaptcha() {
+		readCookie();
+		if(read().equals("")) {
+			a.s.a("Fill the captcha!", new by("OK", new ModHandler(34)), null);
+			return;
+		}
+		key = read();
+		try {
+			String result = doCookieConnection("c?k=" + key);
+			System.out.println(result);
+			if(result.startsWith("B")) {
+				new ModHandler(28).a();
+				//a.v = null;
+			}
+			else {
+				a.s.a(result, new by("OK", new ModHandler(34)), null);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+			}
+	}
 		
+	private void getCaptchaData() {
+		openRecord();
+		try {
+			byte[] png = connectCookie("captcha");
+			a.u.a("Enter the captcha", new ModHandler(35), 0);
+			if (png.length != -1) {
+				a.u.a(Image.createImage(png, 0, png.length));
+				closeRecord();
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	
+	public static byte[] connectCookie(String str) {
+		//System.out.println(str);
+	    try
+	    {
+	      HttpConnection http = null;
+	      (http = (HttpConnection)Connector.open("http://novx.xyz/" + str)).setRequestMethod(HttpConnection.GET);;
+	      http.setRequestProperty("Connection", "keep-alive");
+	      if (http.getResponseCode() == HttpConnection.HTTP_OK)
+	      {
+		    String server_cookie = http.getHeaderField("set-cookie");
+		    if(rs == null){
+		    	System.out.println("write cookie: "+ server_cookie);
+		    	writeRecord(server_cookie);
+		    	cookie = server_cookie;
+		    }
+		    System.out.println("set cookie: "+ server_cookie);
+		    setRecord(server_cookie);
+		    cookie = server_cookie;
+	    	InputStream is = http.openInputStream();
+	    	DataInputStream dis = new DataInputStream(is);
+	        int length = (int)http.getLength();
+	        byte[] arr = null;
+	        if (length != -1)
+	        {
+	          arr = new byte[length];
+	          dis.readFully(arr);
+	        }
+	        dis.close();
+	        return arr;
+	      }
+	      a.b("Connection Failed");
+	    }
+	    catch (IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	    return null;
+	}
+
+	public static String doCookieConnection(String paramString)
+	  {
+		System.out.println(paramString);
+	    try
+	    {
+	      HttpConnection con = (HttpConnection)Connector.open("http://novx.xyz/" + paramString);
+	      con.setRequestMethod("GET");
+	      if(cookie != null){
+	    	  con.setRequestProperty("cookie", cookie);
+	      }
+	      System.out.println("Client cookie: " + cookie);
+	      con.setRequestProperty("Connection", "close");
+	      if (con.getResponseCode() == 200)
+	      {
+	        String str = "";
+	        int length;
+	        InputStream localInputStream = con.openInputStream();
+	        if ((length = (int)con.getLength()) != -1)
+	        {
+	          byte[] arr = new byte[length];
+	          localInputStream.read(arr);
+	          str = new String(arr);
+	        }
+	        return str;
+	      }
+	    }
+	    catch (IOException localIOException)
+	    {
+	      return null;
+	    }
+	    return null;
+	  }
+
+	  
+	public static void openRecord(){
+	  try{
+		  rs = RecordStore.openRecordStore("cookies", true);
+	  }catch(Exception e){}
+	}
+	
+	public static void closeRecord(){
+	  try{
+		  rs.closeRecordStore();
+	  }catch(Exception e){}
+	}
+	
+	public static void writeRecord(String str) {
+		byte[] rec = str.getBytes();
+		try{
+		  rs.addRecord(rec, 0, rec.length);
+		}catch(Exception e){}
+	}
+	
+	public static void setRecord(String str) {
+		byte[] rec = str.getBytes();
+		try {
+			rs.setRecord(1, rec, 0, rec.length);
+		}catch(Exception e){
+			
+		}
+	}
+	
+	public static void readCookie(){
+		try{
+			byte[] recData = new byte[25]; 
+			int len;
+			if(rs.getNumRecords() > 0){
+				if (rs.getRecordSize(1) > recData.length){
+					recData = new byte[rs.getRecordSize(1)];
+				}
+				len = rs.getRecord(1, recData, 0);
+				cookie = new String(recData);
+			}
+	  } catch(Exception e){}
+	}
+
 	private Vector getItemFromData() {
 		Vector vector = new Vector();
 		hx var7;
@@ -357,4 +568,20 @@ public class ModHandler implements ii {
     	jb.b().a(h, title, content, (byte)-1);
     	jb.b().a();
     }
+    
+    public static void load(byte b) {
+    	new Thread(new ModHandler(b)).start();
+    }
+
+	public void run() {
+		switch(this.Thread){
+		case 0:
+			getCaptchaData();
+			break;
+		case 1:
+			checkCaptcha();
+			break;
+		}
+	System.gc();
+	}
 }

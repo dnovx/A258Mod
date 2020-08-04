@@ -869,7 +869,7 @@ public final class ce extends kj implements cm
                     break;
                 }
                 case -98: {
-                    final short short25 = jr.b().readShort();
+                	final short short25 = jr.b().readShort();
                     final byte[] array21 = new byte[jr.b().readShort()];
                     jr.b().read(array21);
                     if (doGetItem)
@@ -1149,15 +1149,19 @@ public final class ce extends kj implements cm
                         km.e = jr.b().readByte();
                         ae.q.addElement(km);
                     }
-                    GameMidlet.i.c(jr.b().readInt());
-                    GameMidlet.i.b = jr.b().readInt();
-                    jr.b().readByte();
-                    final String utf26 = jr.b().readUTF();
-                    GameMidlet.i.a(utf26);
-                    System.out.println("money: " + GameMidlet.i.a[2] + "    " + utf26);
+                    GameMidlet.i.a(es.b().b.f());
                     jn.a();
-                    System.out.println("2222222222222222222");
+                    if (es.isIndoServer != "socket://124.81.71.183:19128") {
+                    	GameMidlet.i.c(jr.b().readInt());
+                    	GameMidlet.i.b = jr.b().readInt();
+                    	jr.b().readByte();
+                    	final String utf26 = jr.b().readUTF();
+                    	GameMidlet.i.a(utf26);
+                    	System.out.println("money: " + GameMidlet.i.a[2] + "    " + utf26);
+                    	//jn.a();
+                    	System.out.println("2222222222222222222");
                     break;
+                    }
                 }
             }
         }

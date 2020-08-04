@@ -248,9 +248,10 @@ public class DataSave implements Runnable{
 				byte Sell = dataInputStream.readByte();
 				short IDIcon = dataInputStream.readShort();
 				//myVector.addElement(partSmall);
-				byte[] PartSmall = ("ID: " + IDPart +"|Name: "+Name+"|Coin: " + Coin +"|Gold: "+Gold+"|Follow: " + PartFollow + "|Sell: "+ Sell + "|IDIcon: " + IDIcon+ "\n").getBytes("UTF-16");
-				//String PartSmallUTF8 = new String(PartSmall, "UTF-8");
-				DataSave.doDataSave(PartSmall, "PartSmall.data");
+//				byte[] PartSmall = ("ID: " + IDPart +"|Name: "+Name+"|Coin: " + Coin +"|Gold: "+Gold+"|Follow: " + PartFollow + "|Sell: "+ Sell + "|IDIcon: " + IDIcon+ "\n").getBytes("UTF-16");
+				byte[] PartSmall = (IDPart +","+Name+"," + Coin +","+Gold+"," + PartFollow + ","+ Sell + "," + IDIcon+ "\n").getBytes("UTF-16");
+//				DataSave.doDataSave(PartSmall, "PartSmall.data");
+				DataSave.doDataSave(PartSmall, "PartSmall.txt");
 			}
 			else if (num4 == -1)
 			{
@@ -275,9 +276,11 @@ public class DataSave implements Runnable{
 					dy[j] = dataInputStream.readByte();
 				}
 				//myVector.addElement(apartInfo);
-				byte[] APartInfo = ("ID: " + IDPart +"|Name: "+Name+"|Coin: " + Coin +"|Gold: "+Gold+"|Follow: " + PartFollow + "|Sell: "+ Sell +"|zOrder: "+zOrder+"|Gender: "+Gender+"|Level: "+Level + "|IDIcon: " + IDIcon+ "\n").getBytes("UTF-16");
-				//String APartInfoUTF8 = new String(APartInfo, "UTF-8");
-				DataSave.doDataSave(APartInfo, "AvatarPartInfo.data");
+//				byte[] APartInfo = ("ID: " + IDPart +"|Name: "+Name+"|Coin: " + Coin +"|Gold: "+Gold+"|Follow: " + PartFollow + "|Sell: "+ Sell +"|zOrder: "+zOrder+"|Gender: "+Gender+"|Level: "+Level + "|IDIcon: " + IDIcon+ "\n").getBytes("UTF-16");
+//				byte[] APartInfo = (IDPart +","+Name+"," + Coin +","+Gold+"," + PartFollow + ","+ Sell +","+zOrder+","+Gender+","+Level + "," + IDIcon+ "\n").getBytes("UTF-16");
+				byte[] APartInfo = (IDIcon+ ".png,").getBytes("UTF-16");
+//				DataSave.doDataSave(APartInfo, "AvatarPartInfo.data");
+				DataSave.doDataSave(APartInfo, "AvatarPartInfo.txt");
 			}
 			else
 			{
@@ -288,9 +291,10 @@ public class DataSave implements Runnable{
 				int PartFollow = num4;
 				short Color = dataInputStream.readShort();
 				//myVector.addElement(partFollow);
-				byte[] PartFllw = ("ID: " + IDPart +"|Coin: " + Coin +"|Gold: "+Gold+"|Follow: " + PartFollow + "|Color: "+Color+ "\n").getBytes("UTF-16");
-				//String PartFollowUTF8 = new String(PartFllw, "UTF-8");
-				DataSave.doDataSave(PartFllw, "PartFollow.data");
+//				byte[] PartFllw = ("ID: " + IDPart +"|Coin: " + Coin +"|Gold: "+Gold+"|Follow: " + PartFollow + "|Color: "+Color+ "\n").getBytes("UTF-16");
+				byte[] PartFllw = (IDPart +"," + Coin +","+Gold+"," + PartFollow + ","+Color+ "\n").getBytes("UTF-16");
+//				DataSave.doDataSave(PartFllw, "PartFollow.data");
+				DataSave.doDataSave(PartFllw, "PartFollow.txt");
 			}
 		}
 	  }catch(IOException e){
